@@ -24,7 +24,8 @@ func Up(w http.ResponseWriter, r *http.Request) (bool, string) {
 		return false, ""
 	}
 
-	file, _, err := r.FormFile("uploadFile")
+	file, header, err := r.FormFile("uploadFile")
+	// fileHeader := make([]byte, 512)
 	if err != nil {
 		httpResponse.RenderError(w, "INVALID_FILE", http.StatusBadRequest)
 		return false, ""
@@ -37,7 +38,7 @@ func Up(w http.ResponseWriter, r *http.Request) (bool, string) {
 		return false, ""
 	}
 
-	fileType := r.PostFormValue("type")
+	fileType := header.Header["Content-Type"][0]
 	fileEndings, err := mime.ExtensionsByType(fileType)
 	if err != nil {
 		httpResponse.RenderError(w, "CANT_READ_FILE_TYPE", http.StatusInternalServerError)
@@ -47,13 +48,13 @@ func Up(w http.ResponseWriter, r *http.Request) (bool, string) {
 	newPath := filepath.Join(uploadPath, fileName+fileEndings[0])
 	newFile, err := os.Create(newPath)
 	if err != nil {
-		httpResponse.RenderError(w, "CANT_WRITE_FILE", http.StatusInternalServerError)
+		httpResponse.RenderError(w, "CANT_SAVE_FILE", http.StatusInternalServerError)
 		return false, ""
 	}
 
 	defer newFile.Close()
 	if _, err := newFile.Write(fileBytes); err != nil {
-		httpResponse.RenderError(w, "CANT_WRITE_FILE2", http.StatusInternalServerError)
+		httpResponse.RenderError(w, "CANT_WRITE_FILE", http.StatusInternalServerError)
 		return false, ""
 	}
 
