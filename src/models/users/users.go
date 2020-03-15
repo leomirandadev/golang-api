@@ -31,47 +31,54 @@ func GetAll() (bool, []User) {
 	return true, users
 }
 
+func GetById(id int64) (bool, []User) {
+	db := settings.ConnectDB()
+	defer db.Close()
+
+	var users []User
+	db.Where("ID = ?", id).Find(&users)
+	return true, users
+}
+
 func Create(newUser User) (bool, User) {
 	db := settings.ConnectDB()
 	defer db.Close()
 
 	db.Create(&newUser)
+
 	return true, newUser
 }
 
-// func deleteUser(w http.ResponseWriter, r *http.Request) {
-// 	db, err := gorm.Open("sqlite3", "test.db")
-// 	if err != nil {
-// 		panic("failed to connect database")
-// 	}
-// 	defer db.Close()
+func Delete(id int64) (bool, User) {
+	db := settings.ConnectDB()
+	defer db.Close()
 
-// 	vars := mux.Vars(r)
-// 	name := vars["name"]
+	var user User
+	db.Where("ID = ?", id).Find(&user)
+	db.Delete(&user)
 
-// 	var user User
-// 	db.Where("name = ?", name).Find(&user)
-// 	db.Delete(&user)
+	return true, user
+}
 
-// 	fmt.Fprintf(w, "Successfully Deleted User")
-// }
+func Update(id int64, userUpdate User) (bool, User) {
+	db := settings.ConnectDB()
+	defer db.Close()
 
-// func updateUser(w http.ResponseWriter, r *http.Request) {
-// 	db, err := gorm.Open("sqlite3", "test.db")
-// 	if err != nil {
-// 		panic("failed to connect database")
-// 	}
-// 	defer db.Close()
+	var user User
+	db.Where("ID = ?", id).Find(&user)
 
-// 	vars := mux.Vars(r)
-// 	name := vars["name"]
-// 	email := vars["email"]
+	user.Email = ifExists(userUpdate.Email, userUpdate.Email, user.Email)
+	user.Name = ifExists(userUpdate.Name, userUpdate.Name, user.Name)
+	user.NickName = ifExists(userUpdate.NickName, userUpdate.NickName, user.NickName)
 
-// 	var user User
-// 	db.Where("name = ?", name).Find(&user)
+	db.Save(&user)
+	return true, user
+}
 
-// 	user.Email = email
-
-// 	db.Save(&user)
-// 	fmt.Fprintf(w, "Successfully Updated User")
-// }
+func ifExists(compare string, trueResponse string, falseResponse string) string {
+	if len(compare) > 0 {
+		return trueResponse
+	} else {
+		return falseResponse
+	}
+}
