@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  app:
+    image: golang
+    volumes:
+      - ../../:/go/src/vcfConverter
+    working_dir: /go/src/vcfConverter
+    command: go run main.go
+    ports:
+      - "80:80"

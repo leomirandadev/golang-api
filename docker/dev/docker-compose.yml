@@ -2,7 +2,7 @@ version: "2"
 
 services:
   app:
-    image: golang:1.6.1-alpine
+    image: golang
     volumes:
       - ../../:/go/src/vcfConverter
     working_dir: /go/src/vcfConverter
