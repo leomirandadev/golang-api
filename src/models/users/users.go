@@ -1,6 +1,8 @@
 package users
 
 import (
+	"vcfConverter/src/settings"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -13,23 +15,15 @@ type User struct {
 	Password string
 }
 
-func connectDataBase() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:root@(localhost)/golang_mysql?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("failed to connect database")
-	}
-	return db
-}
-
 func InitialMigrationUser() {
-	db := connectDataBase()
+	db := settings.ConnectDB()
 	defer db.Close()
 
 	db.AutoMigrate(&User{})
 }
 
 func GetAll() (bool, []User) {
-	db := connectDataBase()
+	db := settings.ConnectDB()
 	defer db.Close()
 
 	var users []User
@@ -38,7 +32,7 @@ func GetAll() (bool, []User) {
 }
 
 func Create(newUser User) (bool, User) {
-	db := connectDataBase()
+	db := settings.ConnectDB()
 	defer db.Close()
 
 	db.Create(&newUser)

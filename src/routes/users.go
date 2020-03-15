@@ -18,6 +18,7 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var newUser users.User
 	json.NewDecoder(r.Body).Decode(&newUser)
