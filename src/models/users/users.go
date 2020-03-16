@@ -5,6 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -46,6 +47,8 @@ func Create(newUser User) (bool, User) {
 	db := settings.ConnectDB()
 	defer db.Close()
 
+	newUser.Password = hashPassword(newUser.Password)
+
 	db.Create(&newUser)
 
 	return true, newUser
@@ -83,4 +86,9 @@ func ifExists(compare string, trueResponse string, falseResponse string) string 
 	} else {
 		return falseResponse
 	}
+}
+
+func hashPassword(password string) string {
+	bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes)
 }
