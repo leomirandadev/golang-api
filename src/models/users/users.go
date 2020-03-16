@@ -16,7 +16,7 @@ type User struct {
 	Password string
 }
 
-func InitialMigrationUser() {
+func InitialMigration() {
 	db := settings.ConnectDB()
 	defer db.Close()
 

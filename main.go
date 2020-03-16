@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"vcfConverter/src/models/files"
 	"vcfConverter/src/models/users"
 	"vcfConverter/src/routes"
 	"vcfConverter/src/services/csvToVcf"
@@ -33,5 +34,6 @@ func main() {
 }
 
 func migrateAll() {
-	users.InitialMigrationUser()
+	users.InitialMigration()
+	files.InitialMigration()
 }
