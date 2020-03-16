@@ -43,6 +43,22 @@ func GetById(id int64) (bool, []User) {
 	return true, user
 }
 
+func GetByEmailPassword(email string, password string) (bool, []User) {
+	db := settings.ConnectDB()
+	defer db.Close()
+
+	var user []User
+	db.Where("email = ?", email).First(&user)
+
+	err := bcrypt.CompareHashAndPassword([]byte(user[0].Password), []byte(password))
+
+	if err == nil {
+		return true, user
+	}
+
+	return false, []User{}
+}
+
 func Create(newUser User) (bool, User) {
 	db := settings.ConnectDB()
 	defer db.Close()

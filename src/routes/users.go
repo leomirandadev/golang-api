@@ -80,3 +80,17 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func LoginUser(w http.ResponseWriter, r *http.Request) {
+	var user users.User
+	json.NewDecoder(r.Body).Decode(&user)
+
+	ok, output := users.GetByEmailPassword(user.Email, user.Password)
+
+	if ok {
+		httpResponse.RenderOutput(w, "Result in output", output)
+	} else {
+		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
+	}
+
+}
