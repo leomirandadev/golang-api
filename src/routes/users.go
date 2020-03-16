@@ -39,10 +39,11 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var newUser users.User
 	json.NewDecoder(r.Body).Decode(&newUser)
 
-	ok, output := users.Create(newUser)
+	ok := users.Create(newUser)
 
 	if ok {
-		httpResponse.RenderOutput(w, "Result in output", output)
+		var outputNull interface{}
+		httpResponse.RenderOutput(w, "User create successfully", outputNull)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
 	}
@@ -53,10 +54,11 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 	params := mux.Vars(r)
 	idUser, _ := strconv.ParseInt(params["id"], 10, 64)
-	ok, output := users.Delete(idUser)
+	ok := users.Delete(idUser)
 
 	if ok {
-		httpResponse.RenderOutput(w, "Result in output", output)
+		var outputNull interface{}
+		httpResponse.RenderOutput(w, "User delete successfully", outputNull)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
 	}
@@ -71,10 +73,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	var userData users.User
 	json.NewDecoder(r.Body).Decode(&userData)
 
-	ok, output := users.Update(idUser, userData)
+	ok := users.Update(idUser, userData)
 
 	if ok {
-		httpResponse.RenderOutput(w, "Result in output", output)
+		var outputNull interface{}
+		httpResponse.RenderOutput(w, "User update successfully", outputNull)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
 	}
