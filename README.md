@@ -2,15 +2,7 @@
 
 ## Installing Cripto
 ```
-mkdir -p $GOPATH/src/golang.org/x/
-```
-
-`After create folder:`
-
-```
-cd $GOPATH/src/golang.org/x/
-
-git clone git@github.com:golang/crypto.git
+go get golang.org/x/crypto/bcrypt
 ```
 
 ## Installing MUX
