@@ -28,6 +28,7 @@ func GetAll() (bool, []User) {
 
 	var users []User
 	db.Find(&users)
+
 	return true, users
 }
 
@@ -35,9 +36,10 @@ func GetById(id int64) (bool, []User) {
 	db := settings.ConnectDB()
 	defer db.Close()
 
-	var users []User
-	db.Where("ID = ?", id).Find(&users)
-	return true, users
+	var user []User
+	db.Where("ID = ?", id).Find(&user)
+
+	return true, user
 }
 
 func Create(newUser User) (bool, User) {
