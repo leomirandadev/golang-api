@@ -8,4 +8,7 @@ services:
       - "80:80"
     restart: unless-stopped
     environment: 
-      DBHOSTGOLANG: db
+      DB_HOST_GOLANG: db
+      DB_USER_GOLANG: root
+      DB_PASSWORD_GOLANG: root
+      DB_NAME_GOLANG: golang_mysql
