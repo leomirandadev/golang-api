@@ -1,10 +1,14 @@
 package settings
 
-import "github.com/jinzhu/gorm"
+import (
+	"os"
+
+	"github.com/jinzhu/gorm"
+)
 
 func ConnectDB() *gorm.DB {
 
-	var host string = "localhost"
+	var host string = os.Getenv("DBHOSTGOLANG")
 	var user string = "root"
 	var password string = "root"
 	var dbname string = "golang_mysql"
