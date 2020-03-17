@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"vcfConverter/src/models/users"
 	"vcfConverter/src/services/httpResponse"
+	"vcfConverter/src/services/jwt"
 
 	"github.com/gorilla/mux"
 )
@@ -91,7 +92,8 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	ok, output := users.GetByEmailPassword(user.Email, user.Password)
 
 	if ok {
-		httpResponse.RenderOutput(w, "Result in output", output)
+		jwtOutput, _ := jwt.GenerateJWT(output)
+		httpResponse.RenderOutput(w, "Result in output", jwtOutput)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
 	}
