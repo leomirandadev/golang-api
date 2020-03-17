@@ -1,13 +1,32 @@
 version: '3'
 volumes:
   data:
+networks: 
+  backend:
 services:
+  app:
+    build:
+      context: ../../
+      dockerfile: docker/dev/Dockerfile
+    ports:
+      - "3000:80"
+    command: go run app.go
+    environment: 
+      DBHOSTGOLANG: db
+    depends_on: 
+      - db
+    networks:
+      - backend
+    links:
+      - db
   db:
     image: mysql:5.6
     ports:
       - "3306:3306"
     volumes:
       - data:/var/lib/mysql
+    networks:
+      - backend
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: golang_mysql
@@ -15,15 +34,11 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     links:
       - db
+    networks:
+      - backend
     ports:
       - 8001:80
     environment:
       - PMA_ARBITRARY=1
     environment:
       MYSQL_ROOT_PASSWORD: root
-  app:
-    build:
-      context: ../../
-      dockerfile: docker/dev/Dockerfile
-    ports:
-      - "8080:80"
