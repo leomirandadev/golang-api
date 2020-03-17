@@ -20,27 +20,33 @@ func Middleware(endpoint func(http.ResponseWriter, *http.Request)) http.HandlerF
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		if r.Header["Authorization"] != nil {
-
 			bearerSplited := strings.Split(r.Header["Authorization"][0], " ")
-			bearerToken := bearerSplited[1]
 
-			token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
-				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-					return nil, fmt.Errorf("There was an error")
+			if len(bearerSplited) == 2 {
+				bearerToken := bearerSplited[1]
+
+				token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
+					if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+						return nil, fmt.Errorf("There was an error")
+					}
+					return mySigningKey, nil
+				})
+
+				if err != nil {
+					httpResponse.RenderError(w, "UNAUTHORIZED", http.StatusUnauthorized)
 				}
-				return mySigningKey, nil
-			})
 
-			if err != nil {
-				httpResponse.RenderError(w, "ERROR", http.StatusUnauthorized)
-			}
-
-			if token.Valid {
-				endpoint(w, r)
+				if token != nil {
+					if token.Valid {
+						endpoint(w, r)
+					}
+				}
+			} else {
+				httpResponse.RenderError(w, "INVALID_AUTHORIZATION", http.StatusUnauthorized)
 			}
 
 		} else {
-			httpResponse.RenderError(w, "ERROR", http.StatusUnauthorized)
+			httpResponse.RenderError(w, "WITHOUT_AUTHORIZATION", http.StatusUnauthorized)
 		}
 	})
 }
