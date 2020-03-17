@@ -1,11 +1,29 @@
-version: "2"
-
+version: '3'
+volumes:
+  data:
 services:
-  app:
-    image: golang
-    volumes:
-      - ../../:/go/src/vcfConverter
-    working_dir: /go/src/vcfConverter
-    command: go run main.go
+  db:
+    image: mysql:5.6
     ports:
-      - "80:80"
+      - "3306:3306"
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: golang_mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - 8001:80
+    environment:
+      - PMA_ARBITRARY=1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  app:
+    build:
+      context: ../../
+      dockerfile: docker/prod/Dockerfile
+    ports:
+      - "8080:80"
