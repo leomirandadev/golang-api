@@ -92,7 +92,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	ok, output := users.GetByEmailPassword(user.Email, user.Password)
 
 	if ok {
-		jwtOutput, _ := jwt.GenerateJWT(output)
+		jwtOutput, _ := jwt.GenerateHash(output)
 		httpResponse.RenderOutput(w, "Result in output", jwtOutput)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)

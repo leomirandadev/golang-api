@@ -3,7 +3,9 @@ package jwt
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
+	"vcfConverter/src/services/httpResponse"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -14,12 +16,15 @@ type Output struct {
 	TOKEN string `json:"token"`
 }
 
-func CheckAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.Handler {
+func Middleware(endpoint func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		if r.Header["Token"] != nil {
+		if r.Header["Authorization"] != nil {
 
-			token, err := jwt.Parse(r.Header["Token"][0], func(token *jwt.Token) (interface{}, error) {
+			bearerSplited := strings.Split(r.Header["Authorization"][0], " ")
+			bearerToken := bearerSplited[1]
+
+			token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("There was an error")
 				}
@@ -27,7 +32,7 @@ func CheckAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.Han
 			})
 
 			if err != nil {
-				fmt.Fprintf(w, err.Error())
+				httpResponse.RenderError(w, "ERROR", http.StatusUnauthorized)
 			}
 
 			if token.Valid {
@@ -35,13 +40,12 @@ func CheckAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.Han
 			}
 
 		} else {
-
-			fmt.Fprintf(w, "Not Authorized")
+			httpResponse.RenderError(w, "ERROR", http.StatusUnauthorized)
 		}
 	})
 }
 
-func GenerateJWT(data interface{}) (Output, error) {
+func GenerateHash(data interface{}) (Output, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
