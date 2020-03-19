@@ -11,6 +11,7 @@ services:
     ports:
       - "3000:80"
     command: go run app.go
+    restart: unless-stopped
     environment: 
       DB_HOST_GOLANG: db
       DB_USER_GOLANG: root
