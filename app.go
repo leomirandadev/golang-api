@@ -22,9 +22,9 @@ func main() {
 
 	// users routes
 	routerHandle.HandleFunc("/user/login", routes.LoginUser).Methods("POST")
+	routerHandle.HandleFunc("/user", routes.CreateUser).Methods("POST")
 	// // private routes
 	routerHandle.HandleFunc("/users/", jwt.Middleware(routes.GetAllUsers)).Methods("GET")
-	routerHandle.HandleFunc("/user", jwt.Middleware(routes.CreateUser)).Methods("POST")
 	routerHandle.HandleFunc("/user/{id}", jwt.Middleware(routes.GetUserById)).Methods("GET")
 	routerHandle.HandleFunc("/user/{id}", jwt.Middleware(routes.DeleteUser)).Methods("DELETE")
 	routerHandle.HandleFunc("/user/{id}", jwt.Middleware(routes.UpdateUser)).Methods("PUT")
