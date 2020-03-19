@@ -2,11 +2,11 @@ package fileHttpTransfer
 
 import (
 	"io/ioutil"
-	"mime"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 	"vcfConverter/src/services/httpResponse"
 )
@@ -15,7 +15,6 @@ const uploadPath = "./tmp"
 const maxUploadSize = 200 * 1024 // 200 KB
 
 func Up(w http.ResponseWriter, r *http.Request) (bool, string) {
-
 	fileName := strconv.FormatInt(time.Now().UnixNano(), 10)
 
 	r.Body = http.MaxBytesReader(w, r.Body, maxUploadSize)
@@ -38,14 +37,16 @@ func Up(w http.ResponseWriter, r *http.Request) (bool, string) {
 		return false, ""
 	}
 
-	fileType := header.Header["Content-Type"][0]
-	fileEndings, err := mime.ExtensionsByType(fileType)
-	if err != nil {
+	contentDisposition := strings.Split(header.Header["Content-Disposition"][0], "filename=")
+	fileUploaded := strings.ReplaceAll(contentDisposition[1], "\"", "")
+
+	fileEndings := filepath.Ext(fileUploaded)
+	if fileEndings == "" {
 		httpResponse.RenderError(w, "CANT_READ_FILE_TYPE", http.StatusInternalServerError)
 		return false, ""
 	}
 
-	newPath := filepath.Join(uploadPath, fileName+fileEndings[0])
+	newPath := filepath.Join(uploadPath, fileName+fileEndings)
 	newFile, err := os.Create(newPath)
 	if err != nil {
 		httpResponse.RenderError(w, "CANT_SAVE_FILE", http.StatusInternalServerError)
