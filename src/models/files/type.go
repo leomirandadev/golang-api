@@ -1,12 +1,15 @@
 package files
 
 import (
-	"github.com/jinzhu/gorm"
+	"time"
+
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 type File struct {
-	gorm.Model
-	Name string
-	Type string
+	ID        int `gorm:"primary_key"`
+	Name      string
+	UserID    int
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
