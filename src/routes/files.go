@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"vcfConverter/src/controllers/filesController"
 	"vcfConverter/src/models/files"
 	"vcfConverter/src/services/httpResponse"
 
@@ -44,6 +45,21 @@ func DeleteFile(w http.ResponseWriter, r *http.Request) {
 
 	if ok {
 		httpResponse.RenderOutput(w, "Result in output", output)
+	} else {
+		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
+	}
+
+}
+
+func DeleteSomeFiles(w http.ResponseWriter, r *http.Request) {
+	var filesId []int64
+	json.NewDecoder(r.Body).Decode(&filesId)
+
+	result := filesController.DeleteSome(filesId)
+
+	if result {
+		var outputNull interface{}
+		httpResponse.RenderOutput(w, "Files deleted successfully", outputNull)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)
 	}

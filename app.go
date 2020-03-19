@@ -34,6 +34,7 @@ func main() {
 	routerHandle.HandleFunc("/files/", jwt.Middleware(routes.GetAllFiles)).Methods("GET")
 	routerHandle.HandleFunc("/file", jwt.Middleware(routes.CreateFile)).Methods("POST")
 	routerHandle.HandleFunc("/file/{id}", jwt.Middleware(routes.DeleteFile)).Methods("DELETE")
+	routerHandle.HandleFunc("/files/", jwt.Middleware(routes.DeleteSomeFiles)).Methods("DELETE")
 
 	// deliver file paths for API
 	routerHandle.PathPrefix("/folder/files/").Handler(http.StripPrefix("/folder/files/", http.FileServer(http.Dir(csvToVcf.PathOutput)))).Methods("GET")
