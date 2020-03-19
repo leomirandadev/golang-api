@@ -102,7 +102,8 @@ func readCsv(r *csv.Reader) []Contact {
 func formatContactVcf(Contact Contact) string {
 	var response string = "BEGIN:VCARD\nVERSION:2.1\n"
 	response += "N:" + Contact.name + ";;;;\n"
-	response += "TEL:" + Contact.telephone + ";CELL:" + Contact.celphone + "\n"
+	response += "TEL;CELL:" + Contact.celphone + "\n"
+	response += "TEL;X-CASA:" + Contact.telephone + "\n"
 	response += "END:VCARD\n"
 
 	return response
