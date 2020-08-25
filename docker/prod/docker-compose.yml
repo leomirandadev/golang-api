@@ -3,7 +3,10 @@ services:
   app:
     build:
       context: ../../
-      dockerfile: docker/dev/Dockerfile
+      dockerfile: docker/Dockerfile
+      target: prod
+    volumes:
+      - ../../:/app/
     ports:
       - "80:80"
     restart: unless-stopped
