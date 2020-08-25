@@ -8,13 +8,14 @@ This is a project model in Go Language for futures applications. The implementat
 - Restful API interface;
 - JWT authorization;
 - Docker for development and production environment;
+- Docker with Debugger;
 - File HTTP Upload;
 - Hash Password with Bcrypt lib;
 
 # Dependencies
-- Installing Cripto
-- Installing MUX
-- Installing GORM
-- Installing JWT-GO
+- Cripto
+- MUX
+- GORM
+- JWT-GO
 
 
