@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/leomirandadev/golang-api/api/middlewares"
 	"github.com/leomirandadev/golang-api/models/users"
 	"github.com/leomirandadev/golang-api/services/httpResponse"
-	"github.com/leomirandadev/golang-api/services/jwt"
 
 	"github.com/gorilla/mux"
 )
@@ -93,7 +93,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	ok, output := users.GetByEmailPassword(user.Email, user.Password)
 
 	if ok {
-		jwtOutput, _ := jwt.GenerateHash(output)
+		jwtOutput, _ := middlewares.GenerateJwt(output)
 		httpResponse.RenderOutput(w, "Result in output", jwtOutput)
 	} else {
 		httpResponse.RenderError(w, "ERROR", http.StatusBadGateway)

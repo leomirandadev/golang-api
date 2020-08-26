@@ -11,6 +11,7 @@ RUN apk update && apk upgrade && \
 WORKDIR /app
 COPY . /app
 RUN go test
+RUN ls
 RUN go build -o main
 
 ### Run the Delve debugger ###

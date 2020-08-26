@@ -52,7 +52,7 @@ func JwtVerify(endpoint func(http.ResponseWriter, *http.Request)) http.HandlerFu
 	})
 }
 
-func GenerateHash(data interface{}) (Output, error) {
+func GenerateJwt(data interface{}) (Output, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
