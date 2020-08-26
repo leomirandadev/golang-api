@@ -1,13 +1,12 @@
 package files
 
 import (
-	"vcfConverter/settings"
-
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/leomirandadev/golang-api/configs"
 )
 
 func GetAll() (bool, []File) {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var files []File
@@ -17,7 +16,7 @@ func GetAll() (bool, []File) {
 }
 
 func Create(newFile File) (bool, File) {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	db.Create(&newFile)
@@ -26,7 +25,7 @@ func Create(newFile File) (bool, File) {
 }
 
 func Delete(id int64) (bool, File) {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var file File

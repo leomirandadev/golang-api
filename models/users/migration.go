@@ -1,9 +1,9 @@
 package users
 
-import "vcfConverter/settings"
+import "github.com/leomirandadev/golang-api/configs"
 
 func InitialMigration() {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	db.AutoMigrate(&User{})

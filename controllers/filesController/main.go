@@ -2,7 +2,8 @@ package filesController
 
 import (
 	"sync"
-	"vcfConverter/models/files"
+
+	"github.com/leomirandadev/golang-api/models/files"
 )
 
 var wg sync.WaitGroup

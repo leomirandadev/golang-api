@@ -8,7 +8,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"vcfConverter/services/httpResponse"
+
+	"github.com/leomirandadev/golang-api/services/httpResponse"
 )
 
 const uploadPath = "./tmp"

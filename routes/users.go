@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"vcfConverter/models/users"
-	"vcfConverter/services/httpResponse"
-	"vcfConverter/services/jwt"
+
+	"github.com/leomirandadev/golang-api/models/users"
+	"github.com/leomirandadev/golang-api/services/httpResponse"
+	"github.com/leomirandadev/golang-api/services/jwt"
 
 	"github.com/gorilla/mux"
 )

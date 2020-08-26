@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"vcfConverter/controllers/filesController"
-	"vcfConverter/models/files"
-	"vcfConverter/services/httpResponse"
+
+	"github.com/leomirandadev/golang-api/controllers/filesController"
+	"github.com/leomirandadev/golang-api/models/files"
+	"github.com/leomirandadev/golang-api/services/httpResponse"
 
 	"github.com/gorilla/mux"
 )

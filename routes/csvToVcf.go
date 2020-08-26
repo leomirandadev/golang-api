@@ -2,9 +2,10 @@ package routes
 
 import (
 	"net/http"
-	"vcfConverter/services/csvToVcf"
-	"vcfConverter/services/fileHttpTransfer"
-	"vcfConverter/services/httpResponse"
+
+	"github.com/leomirandadev/golang-api/services/csvToVcf"
+	"github.com/leomirandadev/golang-api/services/fileHttpTransfer"
+	"github.com/leomirandadev/golang-api/services/httpResponse"
 )
 
 func HandleCsvToVcf(w http.ResponseWriter, r *http.Request) {

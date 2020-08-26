@@ -1,14 +1,13 @@
 package users
 
 import (
-	"vcfConverter/settings"
-
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/leomirandadev/golang-api/configs"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func GetAll() (bool, []User) {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var users []User
@@ -20,7 +19,7 @@ func GetAll() (bool, []User) {
 }
 
 func GetById(id int64) (bool, []User) {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var user []User
@@ -32,7 +31,7 @@ func GetById(id int64) (bool, []User) {
 }
 
 func GetByEmailPassword(email string, password string) (bool, []User) {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var user []User
@@ -49,7 +48,7 @@ func GetByEmailPassword(email string, password string) (bool, []User) {
 }
 
 func Create(newUser User) bool {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	newUser.Password = hashPassword(newUser.Password)
@@ -60,7 +59,7 @@ func Create(newUser User) bool {
 }
 
 func Delete(id int64) bool {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var user User
@@ -71,7 +70,7 @@ func Delete(id int64) bool {
 }
 
 func Update(id int64, userUpdate User) bool {
-	db := settings.ConnectDB()
+	db := configs.ConnectDB()
 	defer db.Close()
 
 	var user User

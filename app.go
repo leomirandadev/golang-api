@@ -3,11 +3,12 @@ package main
 import (
 	"log"
 	"net/http"
-	"vcfConverter/models/files"
-	"vcfConverter/models/users"
-	"vcfConverter/routes"
-	"vcfConverter/services/csvToVcf"
-	"vcfConverter/services/jwt"
+
+	"github.com/leomirandadev/golang-api/models/files"
+	"github.com/leomirandadev/golang-api/models/users"
+	"github.com/leomirandadev/golang-api/routes"
+	"github.com/leomirandadev/golang-api/services/csvToVcf"
+	"github.com/leomirandadev/golang-api/services/jwt"
 
 	"github.com/gorilla/mux"
 )
