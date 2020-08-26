@@ -2,9 +2,9 @@ package routes
 
 import (
 	"net/http"
-	"vcfConverter/src/services/csvToVcf"
-	"vcfConverter/src/services/fileHttpTransfer"
-	"vcfConverter/src/services/httpResponse"
+	"vcfConverter/services/csvToVcf"
+	"vcfConverter/services/fileHttpTransfer"
+	"vcfConverter/services/httpResponse"
 )
 
 func HandleCsvToVcf(w http.ResponseWriter, r *http.Request) {

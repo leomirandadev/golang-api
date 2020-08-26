@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 	"time"
-	"vcfConverter/src/services/httpResponse"
+	"vcfConverter/services/httpResponse"
 
 	"github.com/dgrijalva/jwt-go"
 )

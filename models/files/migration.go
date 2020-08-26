@@ -1,7 +1,7 @@
 package files
 
 import (
-	"vcfConverter/src/settings"
+	"vcfConverter/settings"
 )
 
 func InitialMigration() {

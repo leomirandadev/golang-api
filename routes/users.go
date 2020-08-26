@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"vcfConverter/src/models/users"
-	"vcfConverter/src/services/httpResponse"
-	"vcfConverter/src/services/jwt"
+	"vcfConverter/models/users"
+	"vcfConverter/services/httpResponse"
+	"vcfConverter/services/jwt"
 
 	"github.com/gorilla/mux"
 )

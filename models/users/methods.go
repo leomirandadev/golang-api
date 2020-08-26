@@ -1,7 +1,7 @@
 package users
 
 import (
-	"vcfConverter/src/settings"
+	"vcfConverter/settings"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"golang.org/x/crypto/bcrypt"

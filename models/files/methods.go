@@ -1,7 +1,7 @@
 package files
 
 import (
-	"vcfConverter/src/settings"
+	"vcfConverter/settings"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )

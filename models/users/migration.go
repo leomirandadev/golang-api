@@ -1,6 +1,6 @@
 package users
 
-import "vcfConverter/src/settings"
+import "vcfConverter/settings"
 
 func InitialMigration() {
 	db := settings.ConnectDB()

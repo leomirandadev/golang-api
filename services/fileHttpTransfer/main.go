@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"vcfConverter/src/services/httpResponse"
+	"vcfConverter/services/httpResponse"
 )
 
 const uploadPath = "./tmp"

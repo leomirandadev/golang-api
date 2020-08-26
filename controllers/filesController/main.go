@@ -2,7 +2,7 @@ package filesController
 
 import (
 	"sync"
-	"vcfConverter/src/models/files"
+	"vcfConverter/models/files"
 )
 
 var wg sync.WaitGroup
